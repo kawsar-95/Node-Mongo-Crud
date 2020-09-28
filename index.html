@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <h1>I am a Backend Developer</h1>
+    <br />
+    <form action="/addProducts" method="post">
+      <input type="text" placeholder="name" name="name" />
+      <br />
+      <input type="text" placeholder="price" name="price" />
+      <br />
+      <input type="text" placeholder="quantity" name="quantity" />
+      <br />
+      <button type="submit">Add Product</button>
+    </form>
+    <div id="products"></div>
+
+    <script>
+      function loadProducts() {
+        fetch("/products")
+          .then((response) => response.json())
+          .then((products) => {
+            console.log(products);
+            const container = document.getElementById("products");
+            products.forEach((pd) => {
+              const p = document.createElement("p");
+              p.innerHTML = `${pd.name} price:${pd.price} quantity:${pd.quantity}`;
+              container.appendChild(p);
+            });
+          });
+      }
+      loadProducts();
+    </script>
+  </body>
+</html>
