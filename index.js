@@ -22,7 +22,7 @@ client.connect((err) => {
   app.get("/products", (req, res) => {
     productCollection
       .find({})
-      // .limit(4)
+      .limit(100)
       .toArray((err, documents) => {
         res.send(documents);
       });
@@ -34,6 +34,10 @@ client.connect((err) => {
       console.log("added successfully");
       res.send("success");
     });
+  });
+
+  app.delete("/delete/:id", (req, res) => {
+    productCollection.deleteOne({ _id: req.params.id });
   });
 });
 app.listen(2000);
