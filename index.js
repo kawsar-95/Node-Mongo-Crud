@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const MongoClient = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectId;
 
 const app = express();
 app.use(bodyParser.json());
@@ -37,7 +38,11 @@ client.connect((err) => {
   });
 
   app.delete("/delete/:id", (req, res) => {
-    productCollection.deleteOne({ _id: req.params.id });
+    productCollection
+      .deleteOne({ _id: ObjectId(req.params.id) })
+      .then((result) => {
+        console.log(result);
+      });
   });
 });
 app.listen(2000);
